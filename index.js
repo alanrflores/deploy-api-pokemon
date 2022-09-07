@@ -20,18 +20,21 @@
 const server = require('./src/app.js');
 const { conn, Tipo } = require('./src/db.js');
 const axios = require('axios');
+const { PORT } = process.env;
+
 
 // Syncing all the models at once.
 
 //force:true, para que se reinicie la base de datos cada vez que se levanta el servidor
-conn.sync({ force: false }).then(async () => {
+conn.sync({ force: true }).then(async () => {
   //const dataTypes = await axios.get('https://pokeapi.co/api/v2/type');
   
  // await Tipo.bulkCreate(dataTypes.data.results);
-  server.listen(3001, () => {
-    console.log('%s listening at 3001'); // eslint-disable-line no-console
-    console.log('types created'); // eslint-disable-line no-console
-  });
+ server.listen(PORT, () => console.log(`Listen on port ${PORT}`));
+  // server.listen(3001, () => {
+  //   console.log('%s listening at 3001'); // eslint-disable-line no-console
+  //   console.log('types created'); // eslint-disable-line no-console
+  // });
 });
 
 //problemas con la muerte de node.js cada vez que el servidor al que llama se niega a conectarse. Esto evita eso
